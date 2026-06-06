@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
     }
 
     const currentContext = context || {};
-    const isResultSeasonMode = !!currentContext.isResultSeasonMode;
     const primaryEmotion = currentContext.primaryEmotion || 'neutral';
     const stressLevel = currentContext.stressLevel || 'medium';
     const sleepHours = currentContext.sleepHours || 7;
@@ -34,14 +33,6 @@ CONVERSATION RULES (MANDATORY):
    - Speak in a calm, encouraging, and supportive tone.
    - Suggest 2-3 specific, small, actionable actions they can take (e.g. Pomodoro technique, 4-7-8 breathing, drinking water, taking a walk).
    - Ask one open-ended question at the end to keep them reflecting, but keep your responses short (under 150 words) to prevent overwhelming them.`;
-
-    if (isResultSeasonMode) {
-      systemPrompt += `\n\nRESULT SEASON SUPPORT MODE ACTIVATED:
-- The student is currently facing the intense pressure, anxiety, or disappointment of exam results.
-- Focus heavily on perspective-building: remind them that exams do not define their self-worth or life path.
-- Provide reassurance on coping with disappointment, handling parental expectations, and dealing with uncertainty.
-- Share strategies for emotional resilience, mapping out alternative action plans, and practicing self-compassion.`;
-    }
 
     systemPrompt += `\n\nSTUDENT'S CURRENT STATE CONTEXT:
 - Primary Emotion: ${primaryEmotion}
@@ -94,10 +85,9 @@ CONVERSATION RULES (MANDATORY):
       })),
     ];
 
-    // 4. Handle simulation mode if OpenAI API key is missing
     if (!isOpenAiConfigured()) {
       const lastMessage = messages[messages.length - 1]?.content || '';
-      const fallbackResponse = simulateResponse(lastMessage, primaryEmotion, isResultSeasonMode);
+      const fallbackResponse = simulateResponse(lastMessage, primaryEmotion);
       
       const encoder = new TextEncoder();
       const stream = new ReadableStream({
@@ -159,16 +149,11 @@ CONVERSATION RULES (MANDATORY):
   }
 }
 
-// Fallback response simulation for offline or key-missing environments
-function simulateResponse(msg: string, emotion: string, resultMode: boolean): string {
+function simulateResponse(msg: string, emotion: string): string {
   const normalized = msg.toLowerCase();
   
   if (normalized.includes('suicide') || normalized.includes('kill myself') || normalized.includes('die')) {
     return "I hear how incredibly heavy things are for you right now, and I want to support you, but as an AI, I cannot provide crisis intervention. Please reach out immediately to a helpline where professional support is available. You can contact AASRA at 91-9820466726 or Vandrevala Foundation at 91-9999666555. They have people who care and want to listen. Please stay safe.";
-  }
-
-  if (resultMode) {
-    return "I understand this exam result season feels completely overwhelming and that mock test or final scores are weighing heavily on you. Please remember that this exam is just a single milestone, not a final verdict on your intelligence or your future success. Take a slow, deep breath. Let's focus on what we can control today. Would you like to talk about how to deal with parental expectations, or look at some gentle ways to build up your confidence?";
   }
 
   if (emotion === 'Burnt Out' || emotion === 'Overwhelmed') {

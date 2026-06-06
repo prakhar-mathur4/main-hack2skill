@@ -71,34 +71,7 @@
     }
   }
 
-  /* Result Season Support Mode Override: Warm sunset/amber palette */
-  :root.result-season-active {
-    --background: 30 40% 98%;
-    --foreground: 24 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 24 47% 11%;
-    --primary: 24 85% 50%; /* comforting warm orange-amber */
-    --primary-foreground: 30 40% 98%;
-    --ring: 24 85% 50%;
-    --border: 30 30% 90%;
-    --muted: 30 30% 95%;
-    --muted-foreground: 25 15% 45%;
-  }
 
-  @media (prefers-color-scheme: dark) {
-    :root.result-season-active {
-      --background: 24 40% 6%;
-      --foreground: 30 40% 98%;
-      --card: 24 40% 9%;
-      --card-foreground: 30 40% 98%;
-      --primary: 24 85% 55%;
-      --primary-foreground: 24 40% 6%;
-      --ring: 24 85% 55%;
-      --border: 24 30% 15%;
-      --muted: 24 30% 12%;
-      --muted-foreground: 30 20% 65%;
-    }
-  }
 }
 
 @theme {

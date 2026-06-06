@@ -12,7 +12,7 @@ interface CoachPanelProps {
 }
 
 export function CoachPanel({ latestEmotion, latestStress, latestSleep }: CoachPanelProps) {
-  const { isResultSeasonMode, geminiKey } = useWellness();
+  const { geminiKey } = useWellness();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
@@ -93,7 +93,6 @@ export function CoachPanel({ latestEmotion, latestStress, latestSleep }: CoachPa
         body: JSON.stringify({
           messages: [...messages, userMsg],
           context: {
-            isResultSeasonMode,
             primaryEmotion: latestEmotion || 'Neutral',
             stressLevel: latestStress || 'Medium',
             sleepHours: latestSleep || 7,

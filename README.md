@@ -17,10 +17,6 @@ MindCare is a production-ready, highly accessible, secure, and visually stunning
 * **Generative AI Enhancements**: The AI evaluates free-form reflection texts to adjust the burnout risk score dynamically and extract precise contributing factors.
 * **Actionable Recommendations**: Groups personalized recommendations into four categories: **Study**, **Mental**, **Physical**, and **Sleep**.
 
-### 3. 🌅 "Result Season" Support Mode
-* **Manual Toggle**: A toggle in the header transitions the application theme from cool calming indigos to a comforting, warm sunset amber palette.
-* **AI Behavioral Update**: Modifies the AI Wellness Coach instructions to focus heavily on coping with result uncertainty, dealing with disappointment, and managing parent/peer expectations.
-
 ### 4. 💬 Empathetic AI Wellness Coach (CalmGuide)
 * **Real-time SSE Streaming**: Employs native browser streaming readers (`ReadableStream`) for instant assistant response generation.
 * **Strict Safety Rails**: Implements medical disclaimers and checks for self-harm/psychiatric distress triggers to display crisis helplines (AASRA, Vandrevala Foundation) automatically.

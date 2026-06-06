@@ -28,7 +28,7 @@ import Link from 'next/link';
 import { seedDemoData } from '@/services/seedService';
 
 export default function Home() {
-  const { userId, userLoading, isResultSeasonMode, geminiKey } = useWellness();
+  const { userId, userLoading, geminiKey } = useWellness();
   
   const [entries, setEntries] = useState<MoodEntry[]>([]);
   const [triggers, setTriggers] = useState<StressTrigger[]>([]);
@@ -158,11 +158,6 @@ export default function Home() {
         <div className="space-y-1">
           <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
             Hey there! 👋
-            {isResultSeasonMode && (
-              <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full font-bold animate-pulse-slow">
-                Results Support Mode
-              </span>
-            )}
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
             {entries.length === 0

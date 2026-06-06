@@ -8,7 +8,7 @@ import { Heart, Key, Copy, Check, Info, ShieldAlert, Sparkles, Award, Eye, EyeOf
 
 export function Header() {
   const pathname = usePathname();
-  const { userId, isResultSeasonMode, toggleResultSeasonMode, restoreSession, resetSession, geminiKey, setGeminiKey } = useWellness();
+  const { userId, restoreSession, resetSession, geminiKey, setGeminiKey } = useWellness();
 
   const [isBackupOpen, setIsBackupOpen] = useState(false);
   const [inputUserId, setInputUserId] = useState('');
@@ -97,28 +97,6 @@ export function Header() {
 
           {/* Actions Panel */}
           <div className="flex items-center gap-2.5">
-            {/* Result Season Support Toggle */}
-            <button
-              onClick={toggleResultSeasonMode}
-              className={`group flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-full border transition-all duration-500 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${
-                isResultSeasonMode
-                  ? 'bg-primary/10 text-primary border-primary/40 shadow-sm shadow-primary/5'
-                  : 'bg-background hover:bg-muted border-border/80 text-muted-foreground hover:text-foreground'
-              }`}
-              aria-pressed={isResultSeasonMode}
-              title="Activate Result Season Support Mode"
-            >
-              {isResultSeasonMode ? (
-                <Sparkles className="h-4 w-4 text-primary animate-spin-slow" />
-              ) : (
-                <Award className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
-              )}
-              <span className="hidden sm:inline">
-                {isResultSeasonMode ? 'Result Season Mode Active' : 'Result Support Mode'}
-              </span>
-              <span className="sm:hidden">{isResultSeasonMode ? 'Result Mode' : 'Results'}</span>
-            </button>
-
             {/* Session Settings Button */}
             <button
               onClick={() => setIsBackupOpen(true)}
