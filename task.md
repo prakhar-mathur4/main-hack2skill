@@ -1,0 +1,43 @@
+# Task Checklist
+
+- `[x]` **Step 1: Project Setup & Configuration**
+  - `[x]` Initialize Next.js 15 with App Router, TypeScript, Tailwind, ESLint (`npx create-next-app`)
+  - `[x]` Install additional dependencies (`lucide-react`, `recharts`, `zod`, `react-hook-form`, `@hookform/resolvers`, `@supabase/supabase-js`, `openai`, `ai`)
+  - `[x]` Set up Tailwind theme with soft, calming, premium color palette (slate, indigo, violet, emerald)
+- `[x]` **Step 2: Database Schema & Supabase Setup**
+  - `[x]` Create SQL migration file for tables, indexes, and Row Level Security (RLS)
+  - `[x]` Set up Supabase local client configuration
+  - `[x]` Write seed data script for initial charts and dashboard states
+- `[x]` **Step 3: Core Infrastructure & Hook Helpers**
+  - `[x]` Implement `useAnonymousUser` hook to manage `localStorage` UUID and backup key
+  - `[x]` Create Supabase client helper (`lib/supabase.ts`)
+  - `[x]` Create OpenAI service configuration (`lib/openai.ts`)
+- `[x]` **Step 4: AI Backend Services**
+  - `[x]` Create check-in API route (`/api/check-in`) to process mood entry, run rules-based + OpenAI burnout detection, and store triggers
+  - `[x]` Create AI chat API route (`/api/chat`) to stream empathetic coaching responses
+  - `[x]` Create journal API route (`/api/journal`) to analyze text sentiment and store/update summaries
+- `[x]` **Step 5: Frontend Layout & Theme Toggle**
+  - `[x]` Build layout with Header (Result Season Support Mode toggle) and Footer (Crisis Helplines)
+  - `[x]` Implement Result Season Support Mode CSS variables and context provider
+- `[x]` **Step 6: Step 1 & 3: Daily Check-In Form & Triggers**
+  - `[x]` Build Daily Check-In modal/dialog with Zod validation
+  - `[x]` Add trigger multi-select and reflection textarea
+- `[x]` **Step 7: Step 2: Dashboard & Charts**
+  - `[x]` Build top metric cards (Current Mood, Stress, Sleep Average, Burnout Score)
+  - `[x]` Build interactive Recharts charts (Mood, Stress, Sleep, Study trends) with weekly/monthly filters
+  - `[x]` Build Stress Trigger Analysis charts (ranking, trends, top source)
+- `[x]` **Step 8: Step 4, 5 & 6: AI Wellness Coach, Burnout, & Recommendations**
+  - `[x]` Build AI Coach interactive panel (chat layout, streaming messages, safety disclaimers)
+  - `[x]` Build Burnout Risk card displaying explanation, factors, and progress indicator
+  - `[x]` Build Wellness Recommendations panel grouping study, mental, physical, and sleep tips
+- `[x]` **Step 9: Step 7: Reflection Journal Page**
+  - `[x]` Build journal interface with search, date range filters, list, and details
+  - `[x]` Connect journal submission to sentiment analysis and AI summaries
+- `[x]` **Step 10: Testing & Optimization**
+  - `[x]` Write unit tests for burnout calculations and validation schemas using Vitest
+  - `[x]` Write integration tests for API routes
+  - `[x]` Write E2E tests for the check-in and coach flow using Playwright
+  - `[x]` Audit accessibility compliance (WCAG 2.1 AA) and layout responsiveness
+- `[x]` **Step 11: Deployment Prep & Walkthrough**
+  - `[x]` Create `.env.example`
+  - `[x]` Create `walkthrough.md` with results and testing verification
