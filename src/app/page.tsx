@@ -39,6 +39,7 @@ export default function Home() {
   const [timeRange, setTimeRange] = useState<'week' | 'month' | 'all'>('week');
   const [seeding, setSeeding] = useState(false);
   const [aiConfigured, setAiConfigured] = useState<boolean | null>(null);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/status')
@@ -46,6 +47,18 @@ export default function Home() {
       .then((data) => setAiConfigured(!!data.openAiConfigured || !!data.geminiConfigured))
       .catch((err) => console.error('Error fetching api config status:', err));
   }, []);
+
+  useEffect(() => {
+    if (userLoading || dataLoading) return;
+    if (entries.length === 0 && userId) {
+      try {
+        const dismissed = localStorage.getItem(`wellness_tracker_onboarded_${userId}`);
+        if (dismissed !== 'true') {
+          setIsOnboardingOpen(true);
+        }
+      } catch (e) {}
+    }
+  }, [entries.length, userId, userLoading, dataLoading]);
 
   const handleSeedData = async () => {
     if (!userId || seeding) return;
@@ -392,6 +405,100 @@ export default function Home() {
         onClose={() => setCheckInOpen(false)}
         onSuccess={fetchData}
       />
+
+      {/* Onboarding Welcome Modal Dialog */}
+      {isOnboardingOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+          <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 space-y-5">
+            
+            {/* Header */}
+            <div className="text-center space-y-2">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mx-auto">
+                <Sparkles className="h-6 w-6 animate-pulse-slow" />
+              </div>
+              <h2 id="onboarding-title" className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                A Fresh Start to Mental Balance
+              </h2>
+              <p className="text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                Welcome to MindCare! Let's get you set up to manage exam pressure, track sleep, and keep study burnout at bay.
+              </p>
+            </div>
+
+            {/* Feature Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              
+              <div className="rounded-xl border border-border/60 bg-muted/30 p-3.5 space-y-1.5 hover:bg-muted/50 transition">
+                <div className="flex items-center gap-2 font-bold text-xs text-foreground">
+                  <Activity className="h-4 w-4 text-primary shrink-0" />
+                  Track Daily Wellness
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  Log mood, stress levels, study hours, and sleep. Watch patterns emerge in real-time graphs.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border/60 bg-muted/30 p-3.5 space-y-1.5 hover:bg-muted/50 transition">
+                <div className="flex items-center gap-2 font-bold text-xs text-foreground">
+                  <Smile className="h-4 w-4 text-emerald-500 shrink-0" />
+                  AI Wellness Coach
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  Chat with CalmGuide for active stress-relief exercises, custom advice, and study routines.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border/60 bg-muted/30 p-3.5 space-y-1.5 hover:bg-muted/50 transition">
+                <div className="flex items-center gap-2 font-bold text-xs text-foreground">
+                  <BookOpen className="h-4 w-4 text-violet-500 shrink-0" />
+                  Reflection Journal
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  Write reflections. The system extracts summaries and logs sentiment data automatically.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-border/60 bg-muted/30 p-3.5 space-y-1.5 hover:bg-muted/50 transition">
+                <div className="flex items-center gap-2 font-bold text-xs text-foreground">
+                  <Zap className="h-4 w-4 text-amber-500 shrink-0" />
+                  100% Anonymous
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  No passwords or personal data. Your history resides privately under your session ID.
+                </p>
+              </div>
+
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                onClick={() => {
+                  try {
+                    localStorage.setItem(`wellness_tracker_onboarded_${userId}`, 'true');
+                  } catch (e) {}
+                  setIsOnboardingOpen(false);
+                  setCheckInOpen(true);
+                }}
+                className="flex-1 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-primary-foreground shadow-md shadow-primary/10 transition hover:opacity-90 active:scale-95 cursor-pointer text-center"
+              >
+                Log Your First Day
+              </button>
+              <button
+                onClick={() => {
+                  try {
+                    localStorage.setItem(`wellness_tracker_onboarded_${userId}`, 'true');
+                  } catch (e) {}
+                  setIsOnboardingOpen(false);
+                }}
+                className="flex-1 rounded-xl border border-border bg-background hover:bg-muted px-5 py-2.5 text-xs font-bold text-muted-foreground transition cursor-pointer text-center"
+              >
+                Explore Dashboard
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
