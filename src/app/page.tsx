@@ -484,15 +484,24 @@ export default function Home() {
                 Log Your First Day
               </button>
               <button
-                onClick={() => {
+                onClick={async () => {
                   try {
                     localStorage.setItem(`wellness_tracker_onboarded_${userId}`, 'true');
                   } catch (e) {}
                   setIsOnboardingOpen(false);
+                  await handleSeedData();
                 }}
-                className="flex-1 rounded-xl border border-border bg-background hover:bg-muted px-5 py-2.5 text-xs font-bold text-muted-foreground transition cursor-pointer text-center"
+                disabled={seeding}
+                className="flex-1 rounded-xl border border-border bg-background hover:bg-muted px-5 py-2.5 text-xs font-bold text-muted-foreground transition cursor-pointer text-center disabled:opacity-50 flex items-center justify-center gap-1.5"
               >
-                Explore Dashboard
+                {seeding ? (
+                  <>
+                    <span className="h-3.5 w-3.5 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></span>
+                    Seeding Demo...
+                  </>
+                ) : (
+                  "Explore Dashboard"
+                )}
               </button>
             </div>
 
